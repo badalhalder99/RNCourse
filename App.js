@@ -32,7 +32,12 @@ const  App = () => {
                   </View>
                )}
             /> */}
-            {goals.map((goal) => <Text key={goal}>{goal}</Text>)}
+
+            {goals.map((goal, index) => (
+               <View key={goal +1} style={styles.wrap}>
+                  <Text style={styles.listText}>{goal} {index + 1}</Text>
+               </View>
+            ))}
          </View>
       </View>
    );
@@ -63,6 +68,15 @@ const styles = StyleSheet.create({
    },
    goalsContainer: {
       flex: 5
+   },
+   wrap: {
+      padding: 12,
+      margin: 5,
+      backgroundColor: 'blue',
+      borderRadius: 9
+   },
+   listText: {
+      color: "#fff"
    }
 });
 
