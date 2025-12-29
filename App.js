@@ -1,58 +1,68 @@
-// import { StatusBar } from 'expo-status-bar';
-// import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
+import { useState } from 'react';
 
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Welcome ddd app World!!!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
+const  App = () => {
+   const [text, setText] = useState("")
+   const [goals, setGoals] = useState([])
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+   const inputHandler = (text) => {
+      setText(text)
+   }
 
-import React from 'react'
-import { StyleSheet, Text, View,Button, TextInput } from 'react-native'
+   const submit = () => {
+      if (!text || text.trim().length === 0) alert("Empty input value!")
+      setGoals(prevGoals => [...prevGoals, text])
+      setText("")
+   }
 
-const App = () => {
    return (
-      <View style={css.wrapper}>
-         <Text style={css.text}>Hello, App!!!</Text>
-         <Text style={css.text}>Welcome to Mobile App!</Text>
-         <Button title="Go Dashboard" />
+      <View style={styles.appContainer}>
+         <View style={styles.inputContainer}>
+            <TextInput style={styles.textInput} placeholder="Your course goal!" value={text} onChangeText={inputHandler} />
+            <Button title="Add Goal" onPress={submit} />
+         </View>
+
+         <View style={styles.goalsContainer}>
+            {/* <FlatList
+               data={goals}
+               keyExtractor={(item, index) => index.toString()}
+               renderItem={({item}) => (
+                  <View>
+                     <Text>{item}</Text>
+                  </View>
+               )}
+            /> */}
+            {goals.map((goal) => <Text key={goal}>{goal}</Text>)}
+         </View>
       </View>
-   )
+   );
 }
 
 export default App;
 
-const css = StyleSheet.create({
-   wrapper: {
-      backgroundColor: "#0cba20ff",
+const styles = StyleSheet.create({
+   appContainer: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      paddingTop: 50,
+      paddingHorizontal: 16
    },
-   text: {
-      color: "blue",
-      fontSize: 20
+   inputContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 24,
+      borderBottomWidth: 1,
+      borderBottomColor: '#cccccc'
+   },
+   textInput: {
+      borderWidth: 1,
+      borderColor: '#cccccc',
+      width: "70%",
+      padding: 8
+   },
+   goalsContainer: {
+      flex: 5
    }
-})
-
-
-
-
-
-
-
-
-
+});
 
