@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, FlatList, ScrollView } from 'react-native';
 import { useState } from 'react';
 
 const  App = () => {
@@ -24,20 +24,21 @@ const  App = () => {
 
          <View style={styles.goalsContainer}>
             {/* <FlatList
-               data={goals}
-               keyExtractor={(item, index) => index.toString()}
-               renderItem={({item}) => (
-                  <View>
-                     <Text>{item}</Text>
+                  data={goals}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({item}) => (
+                     <View>
+                        <Text>{item}</Text>
+                     </View>
+                  )}
+               /> */}
+            <ScrollView showsVerticalScrollIndicator={false}>
+               {goals.map((goal, index) => (
+                  <View key={index} style={styles.wrap}>
+                     <Text style={styles.listText}>{goal}</Text>
                   </View>
-               )}
-            /> */}
-
-            {goals.map((goal, index) => (
-               <View key={goal +1} style={styles.wrap}>
-                  <Text style={styles.listText}>{goal} {index + 1}</Text>
-               </View>
-            ))}
+               ))}
+            </ScrollView>
          </View>
       </View>
    );
