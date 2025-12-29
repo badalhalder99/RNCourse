@@ -26,9 +26,9 @@ const  App = () => {
             {/* <FlatList
                   data={goals}
                   keyExtractor={(item, index) => index.toString()}
-                  renderItem={({item}) => (
+                  renderItem={(itemData) => (
                      <View>
-                        <Text>{item}</Text>
+                        <Text>{itemData.item}</Text>
                      </View>
                   )}
                /> */}
