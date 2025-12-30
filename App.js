@@ -1,45 +1,62 @@
-import { StyleSheet, Text, View, Button, TextInput, FlatList, ScrollView } from 'react-native';
 import { useState } from 'react';
+import { StyleSheet, View, FlatList, Text, ScrollView, Button } from 'react-native';
+import Goal from './components/Goal';
+import GoalInput from './components/GoalInput';
 
 const  App = () => {
-   const [text, setText] = useState("")
    const [goals, setGoals] = useState([])
+   const [modalIsVisible, setModalIsVisible] = useState(false)
 
-   const inputHandler = (text) => {
-      setText(text)
+   const submit = (text, setText) => {
+      //Handle corner case:
+      if (!text || text.trim().length === 0) alert("Empty input value!")
+
+      setGoals(prevGoals => [...prevGoals, {text: text, id: Math.random().toString() }])
+      setText("")
+      setModalIsVisible(false)
    }
 
-   const submit = () => {
-      if (!text || text.trim().length === 0) alert("Empty input value!")
-      setGoals(prevGoals => [...prevGoals, text])
-      setText("")
+   const deleteGoalItem = (id) => {
+      setGoals(prevGoals => prevGoals.filter(goal => goal.id !== id))
+      console.log("Item is deleted!")
+   }
+
+   const showModal = () => {
+      setModalIsVisible(true)
+   }
+
+   const closeModal = () => {
+      setModalIsVisible(false)
    }
 
    return (
       <View style={styles.appContainer}>
-         <View style={styles.inputContainer}>
-            <TextInput style={styles.textInput} placeholder="Your course goal!" value={text} onChangeText={inputHandler} />
-            <Button title="Add Goal" onPress={submit} />
-         </View>
+         <Button onPress={showModal} title="Add new Goal" color="#2d09ccff" />
 
-         <View style={styles.goalsContainer}>
-            {/* <FlatList
+         {modalIsVisible && <GoalInput submit={submit} modalVisible={modalIsVisible} modalHidden={closeModal} />}
+
+         {goals.length === 0 ? (
+            <View style={styles.goalsContainer}>
+               <Text style={styles.noGoalText}>There is no Goal!</Text>
+            </View>
+         ) : (
+            <View style={styles.goalsContainer}>
+               <FlatList
                   data={goals}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={(itemData) => (
-                     <View>
-                        <Text>{itemData.item}</Text>
+                  keyExtractor={(item, index) => item.id}
+                  renderItem={(itemData) => {
+                     return <Goal itemData={itemData} deleteGoalItem={deleteGoalItem}/>
+                  }}
+               />
+               {/* <ScrollView showsVerticalScrollIndicator={false}>
+                  {goals.map((goal, index) => (
+                     <View key={index} style={styles.wrap}>
+                        <Text style={styles.listText}>{goal}</Text>
                      </View>
-                  )}
-               /> */}
-            <ScrollView showsVerticalScrollIndicator={false}>
-               {goals.map((goal, index) => (
-                  <View key={index} style={styles.wrap}>
-                     <Text style={styles.listText}>{goal}</Text>
-                  </View>
-               ))}
-            </ScrollView>
-         </View>
+                  ))}
+               </ScrollView> */}
+            </View>
+         )}
       </View>
    );
 }
@@ -52,32 +69,12 @@ const styles = StyleSheet.create({
       paddingTop: 50,
       paddingHorizontal: 16
    },
-   inputContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 24,
-      borderBottomWidth: 1,
-      borderBottomColor: '#cccccc'
-   },
-   textInput: {
-      borderWidth: 1,
-      borderColor: '#cccccc',
-      width: "70%",
-      padding: 8
-   },
    goalsContainer: {
       flex: 5
    },
-   wrap: {
-      padding: 12,
-      margin: 5,
-      backgroundColor: 'blue',
-      borderRadius: 9
-   },
-   listText: {
-      color: "#fff"
+   noGoalText: {
+      textAlign: 'center',
+      marginTop: 20
    }
 });
 
