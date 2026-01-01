@@ -8,10 +8,15 @@ const GoalInput = ({submit, modalVisible, modalHidden}) => {
       setText(text)
    }
 
+   console.log("User input is", text)
+
    return (
       <Modal visible={modalVisible} animationType='slide'>
          <View style={styles.inputContainer}>
-            <Image style={styles.image} source={require("../assets/icon.png")} />
+            <Image
+               style={styles.image}
+               source={require("../assets/icon.png")}
+            />
 
             <TextInput style={styles.textInput} placeholderTextColor="#fff" placeholder="Your course goal!" value={text} onChangeText={inputHandler} />
 
