@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
       height: 40,
       justifyContent: "center",
       alignItems: "center",
+      paddingHorizontal: 20
    },
    buttonOuterContainer: {
       borderRadius: 50,
