@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TextInput, View, Text, Alert } from "react-native";
 import { styles } from "../css/StartGameScreenStyles";
 import PrimaryButton from "../components/PrimaryButton";
+import Title from "../components/Title"
 
 const StartGameScreen = ({onPickedNumber}) => {
    const [number, setNumber] = useState("")
@@ -27,26 +28,32 @@ const StartGameScreen = ({onPickedNumber}) => {
       }
 
       onPickedNumber(number)
-      console.log('valid number')
    }
 
    return (
-      <View style={styles.wrap}>
-         <TextInput
-            value={number}
-            onChangeText={handleNumber}
-            style={styles.textInput}
-            maxLength={2}
-            keyboardType="number-pad"
-            autoCorrect={false}
-            autoCapitalize="none"
-         />
-         <View style={styles.buttonWrap}>
-            <View style={{flex: 1, marginRight: 5}}>
-               <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
+      <View style={styles.wrap}  >
+         <Title>Guess my number!</Title>
+         <View style={{...styles.wrap, marginTop: 20}}>
+            <View>
+               <Text style={{marginBottom: 7}}>Enter a number</Text>
+               <TextInput
+                  value={number}
+                  onChangeText={handleNumber}
+                  style={styles.textInput}
+                  maxLength={2}
+                  keyboardType="number-pad"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  placeholder="Write number"
+               />
             </View>
-            <View style={{flex: 1, marginLeft: 5}}>
-               <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
+            <View style={styles.buttonWrap}>
+               <View style={{flex: 1, marginRight: 5}}>
+                  <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
+               </View>
+               <View style={{flex: 1, marginLeft: 5}}>
+                  <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
+               </View>
             </View>
          </View>
       </View>
