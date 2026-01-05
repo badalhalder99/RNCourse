@@ -14,5 +14,7 @@ const styles = StyleSheet.create({
       color: Colors.black,
       textAlign: 'center',
       padding: 12,
+      maxWidth: '80%',
+      alignSelf: 'center',
    },
 });
