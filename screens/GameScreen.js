@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Alert, Text, FlatList, ScrollView } from 'react-native';
 
 import Title from "../components/Title";
 import NumberContainer from "../components/NumberContainer";
@@ -69,34 +69,36 @@ const GameScreen = ({ userNumber, onGameOver }) => {
    };
 
    return (
-      <View style={styles.screen}>
-         <Title>Opponent's Guess</Title>
-         <NumberContainer>{currentGuess}</NumberContainer>
-         <View>
-            <Text style={{textAlign: "center"}}>Higher or lower?</Text>
-            <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 10 }}>
-               <PrimaryButton onPress={() => nextGuessHandler("lower")} disabled={buttonsDisabled}>
-                  <Ionicons name="remove" size={20} color={Colors.black}/>
-               </PrimaryButton>
-               <PrimaryButton onPress={() => nextGuessHandler("greater")} disabled={buttonsDisabled}>
-                  <Ionicons name="add" size={20} color={Colors.black}/>
-               </PrimaryButton>
+      <ScrollView style={{flex: 1}}>
+         <View style={styles.screen}>
+            <Title>Opponent's Guess</Title>
+            <NumberContainer>{currentGuess}</NumberContainer>
+            <View>
+               <Text style={{textAlign: "center"}}>Higher or lower?</Text>
+               <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 10 }}>
+                  <PrimaryButton onPress={() => nextGuessHandler("lower")} disabled={buttonsDisabled}>
+                     <Ionicons name="remove" size={20} color={Colors.black}/>
+                  </PrimaryButton>
+                  <PrimaryButton onPress={() => nextGuessHandler("greater")} disabled={buttonsDisabled}>
+                     <Ionicons name="add" size={20} color={Colors.black}/>
+                  </PrimaryButton>
+               </View>
+            </View>
+            <View style={styles.listContainer}>
+               {/* {guessRounds.map(guessRound => <Text key={guessRound}>{guessRound}</Text>)} */}
+               <FlatList
+                  data={guessRounds}
+                  renderItem={(itemData) => (
+                     <View style={styles.listItem}>
+                        <Text style={styles.itemText}>#: {guessRounds.length - itemData.index}</Text>
+                        <Text style={styles.itemText}>Opponent's Guess: {itemData.item}</Text>
+                     </View>
+                  )}
+                  keyExtractor={(item) => item}
+               />
             </View>
          </View>
-         <View style={styles.listContainer}>
-            {/* {guessRounds.map(guessRound => <Text key={guessRound}>{guessRound}</Text>)} */}
-            <FlatList
-               data={guessRounds}
-               renderItem={(itemData) => (
-                  <View style={styles.listItem}>
-                     <Text style={styles.itemText}>#: {guessRounds.length - itemData.index}</Text>
-                     <Text style={styles.itemText}>Opponent's Guess: {itemData.item}</Text>
-                  </View>
-               )}
-               keyExtractor={(item) => item}
-            />
-         </View>
-      </View>
+      </ScrollView>
    );
 };
 
@@ -131,3 +133,5 @@ const styles = StyleSheet.create({
       fontFamily: 'Poppins_Medium'
    }
 });
+
+

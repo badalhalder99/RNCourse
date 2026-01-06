@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
 
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
@@ -57,16 +58,19 @@ const App = () => {
    }
 
    return (
-      <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
-         <ImageBackground
-            source={require("./assets/background.png")}
-            resizeMode="cover"
-            imageStyle={{ opacity: 0.5 }}
-            style={styles.imageStyle}
-         >
-            {screen}
-         </ImageBackground>
-      </LinearGradient>
+      <>
+         <StatusBar style="dark" animated={true} backgroundColor="#ff0b03ff"/>
+         <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
+            <ImageBackground
+               source={require("./assets/background.png")}
+               resizeMode="cover"
+               imageStyle={{ opacity: 0.5 }}
+               style={styles.imageStyle}
+            >
+               {screen}
+            </ImageBackground>
+         </LinearGradient>
+      </>
    );
 };
 
