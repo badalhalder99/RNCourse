@@ -2,7 +2,9 @@ import { Text, StyleSheet, Platform } from 'react-native';
 import Colors from '../css/color/Colors';
 
 function Title({ children }) {
-  return <Text style={styles.title}>{children}</Text>;
+   return <Text style={styles.title}>{children}</Text>;
+
+
 }
 
 export default Title;
@@ -20,7 +22,6 @@ const styles = StyleSheet.create({
       // borderWidth: Platform.select({ ios: 0, android: 5 }),
       borderWidth: 1,
       borderColor: Colors.success,
-      borderRadius: 12,
-      marginTop: 30
+      borderRadius: 12
    },
 });

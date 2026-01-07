@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
 import GameOverScreen from "./screens/GameOverScreen";
@@ -58,8 +58,8 @@ const App = () => {
    }
 
    return (
-      <>
-         <StatusBar style="dark" animated={true} backgroundColor="#ff0b03ff"/>
+      <SafeAreaProvider>
+         <StatusBar barStyle="light-content" animated={true} backgroundColor={Colors.accent}/>
          <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
             <ImageBackground
                source={require("./assets/background.png")}
@@ -70,7 +70,7 @@ const App = () => {
                {screen}
             </ImageBackground>
          </LinearGradient>
-      </>
+      </SafeAreaProvider>
    );
 };
 

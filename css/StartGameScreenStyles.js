@@ -4,7 +4,6 @@ import Colors from "./color/Colors";
 export const styles = StyleSheet.create({
    wrap: {
       margin: 15,
-      marginTop: 50,
       backgroundColor: Colors.secondary,
       padding: 16,
       borderRadius: 12,

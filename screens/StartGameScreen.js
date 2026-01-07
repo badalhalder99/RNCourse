@@ -3,6 +3,7 @@ import { TextInput, View, Text, Alert, KeyboardAvoidingView, ScrollView } from "
 import { styles } from "../css/StartGameScreenStyles";
 import PrimaryButton from "../components/PrimaryButton";
 import Title from "../components/Title"
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const StartGameScreen = ({onPickedNumber}) => {
    const [number, setNumber] = useState("")
@@ -31,37 +32,39 @@ const StartGameScreen = ({onPickedNumber}) => {
    }
 
    return (
-      <ScrollView style={{flex: 1}}>
-         <KeyboardAvoidingView  style={{flex: 1}} behavior="position">
-            <View style={styles.wrap}  >
-               <Title>Guess my number!</Title>
+      <SafeAreaView  style={{flex: 1}}>
+         <ScrollView style={{flex: 1}}>
+            <KeyboardAvoidingView  style={{flex: 1}} behavior="position">
+               <View style={styles.wrap}  >
+                  <Title>Guess my number!</Title>
 
-               <View style={{...styles.wrap, marginTop: 20}}>
-                  <View>
-                     <Text style={{marginBottom: 7}}>Enter a number</Text>
-                     <TextInput
-                        value={number}
-                        onChangeText={handleNumber}
-                        style={styles.textInput}
-                        maxLength={2}
-                        keyboardType="number-pad"
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        placeholder="Write number"
-                     />
-                  </View>
-                  <View style={styles.buttonWrap}>
-                     <View style={{flex: 1, marginRight: 5}}>
-                        <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
+                  <View style={{...styles.wrap, marginTop: 20}}>
+                     <View>
+                        <Text style={{marginBottom: 7}}>Enter a number</Text>
+                        <TextInput
+                           value={number}
+                           onChangeText={handleNumber}
+                           style={styles.textInput}
+                           maxLength={2}
+                           keyboardType="number-pad"
+                           autoCorrect={false}
+                           autoCapitalize="none"
+                           placeholder="Write number"
+                        />
                      </View>
-                     <View style={{flex: 1, marginLeft: 5}}>
-                        <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
+                     <View style={styles.buttonWrap}>
+                        <View style={{flex: 1, marginRight: 5}}>
+                           <PrimaryButton onPress={handleReset}>Reset</PrimaryButton>
+                        </View>
+                        <View style={{flex: 1, marginLeft: 5}}>
+                           <PrimaryButton onPress={handleConfirm}>Confirm</PrimaryButton>
+                        </View>
                      </View>
                   </View>
                </View>
-            </View>
-         </KeyboardAvoidingView>
-      </ScrollView>
+            </KeyboardAvoidingView>
+         </ScrollView>
+      </SafeAreaView>
    )
 }
 
