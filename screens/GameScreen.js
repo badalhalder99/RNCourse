@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert, Text, FlatList, ScrollView } from 'react-native';
+import { View, StyleSheet, Alert, Text, FlatList } from 'react-native';
 
 import Title from "../components/Title";
 import NumberContainer from "../components/NumberContainer";
@@ -69,7 +69,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
    };
 
    return (
-      <ScrollView style={{flex: 1}}>
+      <View style={{flex: 1}}>
          <View style={styles.screen}>
             <Title>Opponent's Guess</Title>
             <NumberContainer>{currentGuess}</NumberContainer>
@@ -98,7 +98,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
                />
             </View>
          </View>
-      </ScrollView>
+      </View>
    );
 };
 
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
       padding: 24,
    },
    listContainer: {
-      flex: 1,
+      flexGrow: 1,
       padding: 16
    },
    listItem: {
