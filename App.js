@@ -1,25 +1,13 @@
-import { useState } from "react";
-import { ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import StartGameScreen from "./screens/StartGameScreen";
-import GameScreen from "./screens/GameScreen";
-import GameOverScreen from "./screens/GameOverScreen";
-
+import { Text } from 'react-native';
 import { useFonts } from "expo-font";
-import {
-  Poppins_400Regular,
-  Poppins_500Medium,
-  Poppins_700Bold,
-} from "@expo-google-fonts/poppins";
-
+import {Poppins_400Regular, Poppins_500Medium, Poppins_700Bold} from "@expo-google-fonts/poppins";
 import { styles } from "./css/AppStyles";
 import Colors from "./css/color/Colors";
 
 const App = () => {
-   const [userNumber, setUserNumber] = useState(null);
-   const [gameIsOver, setGameIsOver] = useState(false);
 
    //Font code start:
    const [fontsLoaded] = useFonts({
@@ -33,42 +21,11 @@ const App = () => {
    }
    //Font code end:
 
-   const pickedNumberHandler = (number) => {
-      setUserNumber(number);
-      setGameIsOver(false);
-   };
-
-   const gameOverHandler = () => {
-      setGameIsOver(true);
-   };
-
-   const restartGameHandler = () => {
-      setUserNumber(null);
-      setGameIsOver(false);
-   };
-
-   let screen;
-
-   if (!userNumber) {
-      screen = <StartGameScreen onPickedNumber={pickedNumberHandler} />;
-   } else if (gameIsOver) {
-      screen = <GameOverScreen onRestart={restartGameHandler} />;
-   } else {
-      screen = <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />;
-   }
-
    return (
       <SafeAreaProvider>
          <StatusBar barStyle="light-content" animated={true} backgroundColor={Colors.accent}/>
          <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
-            <ImageBackground
-               source={require("./assets/background.png")}
-               resizeMode="cover"
-               imageStyle={{ opacity: 0.5 }}
-               style={styles.imageStyle}
-            >
-               {screen}
-            </ImageBackground>
+            <Text>Welcome to meal app!</Text>
          </LinearGradient>
       </SafeAreaProvider>
    );
