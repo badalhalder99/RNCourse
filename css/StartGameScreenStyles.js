@@ -21,7 +21,11 @@ export const styles = StyleSheet.create({
       borderColor: Colors.border,
       borderRadius: 50,
       paddingLeft: 15,
+      paddingHorizontal: 15,
+      paddingVertical: 10,
+      height: 45,
       marginBottom: 10,
+      textAlignVertical: 'center',
    },
    buttonWrap: {
       flexDirection: 'row',
