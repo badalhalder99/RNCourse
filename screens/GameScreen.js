@@ -131,6 +131,9 @@ const styles = StyleSheet.create({
    },
    itemText: {
       fontFamily: 'Poppins_Medium'
+   },
+   ddd: {
+      
    }
 });
 
