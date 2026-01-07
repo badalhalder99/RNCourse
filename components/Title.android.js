@@ -2,9 +2,7 @@ import { Text, StyleSheet, Platform } from 'react-native';
 import Colors from '../css/color/Colors';
 
 function Title({ children }) {
-   return <Text style={styles.title}>{children}</Text>;
-
-
+   return <Text style={styles.title}>{children}</Text>
 }
 
 export default Title;

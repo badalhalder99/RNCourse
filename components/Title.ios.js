@@ -1,13 +1,8 @@
 import { Text, StyleSheet, Platform } from 'react-native';
 import Colors from '../css/color/Colors';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Title({ children }) {
-   return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-         <Text style={styles.title}>{children}</Text>;
-      </SafeAreaView>
-   )
+   return <Text style={styles.title}>{children}</Text>
 }
 
 export default Title;
