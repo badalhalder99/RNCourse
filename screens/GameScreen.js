@@ -7,6 +7,7 @@ import PrimaryButton from "../components/PrimaryButton";
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from "../css/color/Colors";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Generate random number
 function generateRandomBetween(min, max, exclude) {
@@ -69,7 +70,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
    };
 
    return (
-      <View style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1}}>
          <View style={styles.screen}>
             <Title>Opponent's Guess</Title>
             <NumberContainer>{currentGuess}</NumberContainer>
@@ -98,7 +99,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
                />
             </View>
          </View>
-      </View>
+      </SafeAreaView>
    );
 };
 
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
       fontFamily: 'Poppins_Medium'
    },
    ddd: {
-      
+
    }
 });
 
