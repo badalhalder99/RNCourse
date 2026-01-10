@@ -8,6 +8,7 @@ import {Poppins_400Regular, Poppins_500Medium, Poppins_700Bold} from "@expo-goog
 import { styles } from "./css/AppStyles";
 import Colors from "./css/color/Colors";
 import CategoriesScreen from "./screens/CategoriesScreen";
+import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -26,18 +27,20 @@ const App = () => {
    //Font code end:
 
    return (
-      <>
+      <SafeAreaProvider>
          <StatusBar barStyle="light-content"/>
          <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
             <NavigationContainer>
                <Stack.Navigator>
                   {/* Normaly you call the component like <CategoriesScreen /> But here only keep component name without jsx in the component props */}
-                  <Stack.Screen name="MealsCategories" component={CategoriesScreen}/>
+                  <Stack.Screen name="CategoriesScreen" component={CategoriesScreen} />
+                  <Stack.Screen name="MealsOverviewScreen" component={MealsOverviewScreen}/>
                </Stack.Navigator>
             </NavigationContainer>
          </LinearGradient>
-      </>
+      </SafeAreaProvider>
    );
 };
 
 export default App;
+

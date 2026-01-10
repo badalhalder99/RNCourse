@@ -1,12 +1,13 @@
 import { StyleSheet, View, Text, Pressable, Dimensions, Platform  } from "react-native";
 
-const CategoryGridTitle = ({title, color}) => {
+const CategoryGridTitle = ({title, color, onPress}) => {
 
    return (
       <View style={[styles.gridItem, { backgroundColor: color}]}>
          <Pressable
             style={({pressed}) => [styles.button, pressed ? styles.buttonPressed : null]}
             android_ripple={{ color: "#ccc" }}
+            onPress={onPress}
          >
             <View style={styles.innerContainer}>
                <Text style={{fontFamily: "Poppins_Medium"}}>{title}</Text>
@@ -50,3 +51,4 @@ const styles = StyleSheet.create({
       alignItems: "center"
    },
 })
+

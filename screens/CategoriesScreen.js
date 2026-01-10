@@ -3,16 +3,24 @@ import { FlatList } from "react-native";
 import CategoryGridTitle from "../components/CategoryGridTitle";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const renderCategoryItem = (itemData) => {
-   return (
-      <CategoryGridTitle
-         title={itemData.item.title}
-         color={itemData.item.color}
-      />
-   )
-}
+const CategoriesScreen = ({ navigation }) => {
 
-const CategoriesScreen = () => {
+   const renderCategoryItem = (itemData) => {
+      const pressHandler = () => {
+         navigation.navigate("MealsOverviewScreen", {
+            categoryId: itemData.item.id
+         })
+      }
+
+      return (
+         <CategoryGridTitle
+            title={itemData.item.title}
+            color={itemData.item.color}
+            onPress={pressHandler}
+         />
+      )
+   }
+
    return (
       <FlatList
          data={CATEGORIES}
@@ -24,3 +32,4 @@ const CategoriesScreen = () => {
 }
 
 export default CategoriesScreen;
+
