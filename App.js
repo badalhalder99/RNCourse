@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useFonts } from "expo-font";
 import {Poppins_400Regular, Poppins_500Medium, Poppins_700Bold} from "@expo-google-fonts/poppins";
 import { styles } from "./css/AppStyles";
@@ -10,8 +11,35 @@ import Colors from "./css/color/Colors";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
+import FavoritesScreen from "./screens/FavoritesScreen";
 
 const Stack = createNativeStackNavigator()
+const Drawer = createDrawerNavigator()
+
+const DrawerNavigator = () => {
+   return (
+      <Drawer.Navigator
+         screenOptions={{
+            headerTitleAlign: 'center',
+            headerTintColor: '#000',
+            drawerContentStyle: {
+            backgroundColor: '#cfd5bf'
+            }
+         }}
+      >
+         <Drawer.Screen
+            name="All Categories"
+            component={CategoriesScreen}
+
+         />
+
+         <Drawer.Screen
+            name="FavoritesScreen"
+            component={FavoritesScreen}
+         />
+      </Drawer.Navigator>
+   )
+}
 
 const App = () => {
 
@@ -33,7 +61,6 @@ const App = () => {
          <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
             <NavigationContainer>
                <Stack.Navigator
-                  initialRouteName="CategoriesScreen"
                   screenOptions={{
                      headerStyle: { backgroundColor: '#ddd' },
                      headerTintColor: 'white',
@@ -42,10 +69,18 @@ const App = () => {
                   }}
                >
                   <Stack.Screen
+                     name="DrawerNavigator"
+                     component={DrawerNavigator}
+                     options={{
+                        headerShown: false
+                     }}
+                  />
+
+                  {/* <Stack.Screen
                      name="CategoriesScreen"
                      component={CategoriesScreen}
                      options={{ title: "All Categories" }}
-                  />
+                  /> */}
 
                   <Stack.Screen
                      name="MealsOverviewScreen"
