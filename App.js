@@ -12,6 +12,7 @@ import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
+import FavoritesContextProvider from "./store/context/favorites-context";
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -57,40 +58,42 @@ const App = () => {
 
    return (
       <SafeAreaProvider>
-         <StatusBar barStyle="light-content"/>
+         <StatusBar barStyle="light-content" hidden={true}/>
          <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
-            <NavigationContainer>
-               <Stack.Navigator
-                  screenOptions={{
-                     headerStyle: { backgroundColor: '#ddd' },
-                     headerTintColor: 'white',
-                     headerTitleStyle: { fontWeight: 'bold' },
-                     contentStyle: { backgroundColor: '#3f2f25' },
-                  }}
-               >
-                  <Stack.Screen
-                     name="DrawerNavigator"
-                     component={DrawerNavigator}
-                     options={{
-                        headerShown: false
+            <FavoritesContextProvider>
+               <NavigationContainer>
+                  <Stack.Navigator
+                     screenOptions={{
+                        headerStyle: { backgroundColor: '#ddd' },
+                        headerTintColor: 'white',
+                        headerTitleStyle: { fontWeight: 'bold' },
+                        contentStyle: { backgroundColor: '#3f2f25' },
                      }}
-                  />
+                  >
+                     <Stack.Screen
+                        name="DrawerNavigator"
+                        component={DrawerNavigator}
+                        options={{
+                           headerShown: false
+                        }}
+                     />
 
-                  {/* <Stack.Screen
-                     name="CategoriesScreen"
-                     component={CategoriesScreen}
-                     options={{ title: "All Categories" }}
-                  /> */}
+                     {/* <Stack.Screen
+                        name="CategoriesScreen"
+                        component={CategoriesScreen}
+                        options={{ title: "All Categories" }}
+                     /> */}
 
-                  <Stack.Screen
-                     name="MealsOverviewScreen"
-                     component={MealsOverviewScreen}
-                  />
+                     <Stack.Screen
+                        name="MealsOverviewScreen"
+                        component={MealsOverviewScreen}
+                     />
 
-                  <Stack.Screen name="MealDetailsScreen" component={MealDetailsScreen} />
+                     <Stack.Screen name="MealDetailsScreen" component={MealDetailsScreen} />
 
-               </Stack.Navigator>
-            </NavigationContainer>
+                  </Stack.Navigator>
+               </NavigationContainer>
+            </FavoritesContextProvider>
          </LinearGradient>
       </SafeAreaProvider>
    );
