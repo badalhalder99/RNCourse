@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from "expo-font";
 import {Poppins_400Regular, Poppins_500Medium, Poppins_700Bold} from "@expo-google-fonts/poppins";
-import { styles } from "./css/AppStyles";
+import { Ionicons } from "@expo/vector-icons";
 import Colors from "./css/color/Colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -17,9 +17,34 @@ const BottomTabs = createBottomTabNavigator()
 
 const ExpensesOverview = () => {
    return (
-      <BottomTabs.Navigator>
-         <BottomTabs.Screen name="RecentExpenses" component={RecentExpenses}/>
-         <BottomTabs.Screen name="AllExpenses" component={AllExpenses}/>
+      <BottomTabs.Navigator screenOptions={{
+         headerStyle: {
+            backgroundColor: Colors.accent
+         },
+         headerTintColor: Colors.white,
+         tabBarStyle: {
+            backgroundColor: Colors.accent
+         },
+         tabBarActiveTintColor: Colors.white
+      }}>
+         <BottomTabs.Screen
+            name="RecentExpenses"
+            component={RecentExpenses}
+            options={{
+               title: "Recent Expenses",
+               tabBarLabel: "Recent Expenses",
+               tabBarIcon: ({size, color}) => <Ionicons name="hourglass" size={size} color={color} />
+            }}
+         />
+         <BottomTabs.Screen
+            name="AllExpenses"
+            component={AllExpenses}
+            options={{
+               title: "All Expenses",
+               tabBarLabel: "All Expenses",
+               tabBarIcon: ({size, color}) => <Ionicons name="calendar" size={size} color={color} />
+            }}
+         />
       </BottomTabs.Navigator>
    )
 }
@@ -40,16 +65,19 @@ const App = () => {
 
    return (
       <SafeAreaProvider>
-         <StatusBar barStyle="light-content" hidden={true} />
-
-         <LinearGradient style={styles.wrap} colors={[Colors.primary, Colors.secondary]}>
+         <StatusBar barStyle="light-content" hidden={false} />
             <NavigationContainer>
                <Stack.Navigator initialRouteName="ExpensesOverview">
-                  <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} />
+                  <Stack.Screen
+                     name="ExpensesOverview"
+                     component={ExpensesOverview}
+                     options={{
+                        headerShown: false,
+                     }}
+                  />
                   <Stack.Screen name="ManageExpense" component={ManageExpense}/>
                </Stack.Navigator>
             </NavigationContainer>
-         </LinearGradient>
       </SafeAreaProvider>
    );
 };
