@@ -11,13 +11,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
+import IconButton from "./components/UI/IconButton";
 
 const Stack = createNativeStackNavigator()
 const BottomTabs = createBottomTabNavigator()
 
 const ExpensesOverview = () => {
    return (
-      <BottomTabs.Navigator screenOptions={{
+      <BottomTabs.Navigator screenOptions={({ navigation }) => ({
          headerStyle: {
             backgroundColor: Colors.accent
          },
@@ -25,8 +26,18 @@ const ExpensesOverview = () => {
          tabBarStyle: {
             backgroundColor: Colors.accent
          },
-         tabBarActiveTintColor: Colors.white
-      }}>
+         tabBarActiveTintColor: Colors.white,
+         headerRight: ({tintColor}) => (
+            <IconButton
+               icon="add"
+               size={24}
+               color={tintColor}
+               onPress={() => {
+                  navigation.navigate("ManageExpense")
+               }}
+            />
+         )
+      })}>
          <BottomTabs.Screen
             name="RecentExpenses"
             component={RecentExpenses}
@@ -75,7 +86,15 @@ const App = () => {
                         headerShown: false,
                      }}
                   />
-                  <Stack.Screen name="ManageExpense" component={ManageExpense}/>
+
+                  <Stack.Screen
+                     name="ManageExpense"
+                     component={ManageExpense}
+                     options={{
+                        title: "Manage Expense",
+                        presentation: 'modal'
+                     }}
+                  />
                </Stack.Navigator>
             </NavigationContainer>
       </SafeAreaProvider>
