@@ -3,11 +3,13 @@ import Colors from '../../css/color/Colors';
 import { getFormattedDate } from '../../utils/utils';
 import { useNavigation } from '@react-navigation/native';
 
-function ExpenseItem({ description, amount, date }) {
+function ExpenseItem({ id, description, amount, date }) {
    const navigation = useNavigation()
 
    const expensePressHandler = () => {
-      navigation.navigate("ManageExpense")
+      navigation.navigate("ManageExpense", {
+         expenseId: id
+      })
    }
 
    return (

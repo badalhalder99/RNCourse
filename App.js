@@ -12,6 +12,7 @@ import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import IconButton from "./components/UI/IconButton";
+import ExpensesContextProvider from './store/store';
 
 const Stack = createNativeStackNavigator()
 const BottomTabs = createBottomTabNavigator()
@@ -77,26 +78,28 @@ const App = () => {
    return (
       <SafeAreaProvider>
          <StatusBar barStyle="light-content" hidden={false} />
-            <NavigationContainer>
-               <Stack.Navigator initialRouteName="ExpensesOverview">
-                  <Stack.Screen
-                     name="ExpensesOverview"
-                     component={ExpensesOverview}
-                     options={{
-                        headerShown: false,
-                     }}
-                  />
+           <ExpensesContextProvider>
+               <NavigationContainer>
+                  <Stack.Navigator initialRouteName="ExpensesOverview">
+                     <Stack.Screen
+                        name="ExpensesOverview"
+                        component={ExpensesOverview}
+                        options={{
+                           headerShown: false,
+                        }}
+                     />
 
-                  <Stack.Screen
-                     name="ManageExpense"
-                     component={ManageExpense}
-                     options={{
-                        title: "Manage Expense",
-                        presentation: 'modal'
-                     }}
-                  />
-               </Stack.Navigator>
-            </NavigationContainer>
+                     <Stack.Screen
+                        name="ManageExpense"
+                        component={ManageExpense}
+                        options={{
+                           title: "Manage Expense",
+                           presentation: 'modal'
+                        }}
+                     />
+                  </Stack.Navigator>
+               </NavigationContainer>
+            </ExpensesContextProvider>
       </SafeAreaProvider>
    );
 };
