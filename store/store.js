@@ -1,75 +1,86 @@
-import { createContext, useReducer } from "react";
-import { DUMMY_EXPENSES } from "../data/data";
+import { createContext, useEffect, useReducer } from "react";
+import { fetchExpenses, createExpense, updateExpenseApi,deleteExpenseApi } from "../API/http"
 
 export const ExpensesContext = createContext({
-   expenses: [],
-   addExpense: ({description, amount, date}) => {},
-   deleteExpense: (id) => {},
-   updateExpense: (id, {description, amount, date}) => {},
-})
+  expenses: [],
+  addExpense: (expenseData) => {},
+  updateExpense: (id, expenseData) => {},
+  deleteExpense: (id) => {},
+});
 
 const expensesReducer = (state, action) => {
    switch (action.type) {
+      case "SET":
+         return action.payload;
+
       case "ADD":
-         const id = new Date().toString() + Math.random().toString()
-         return [{ ...action.payload, id: id }, ...state]
+         return [action.payload, ...state];
 
       case "UPDATE":
-         const updateableExpenseIndex = state.findIndex(expense => expense.id === action.payload.id)
-         const updateableExpense = state[updateableExpenseIndex]
+         const index = state.findIndex(
+            (expense) => expense.id === action.payload.id
+         );
+         const updatedExpense = {
+            ...state[index],
+            ...action.payload.data,
+         };
 
-         const updatedItem = { ...updateableExpense, ...action.payload.data }
-         const updatedExpenses = [...state]
+         const updatedState = [...state];
+         updatedState[index] = updatedExpense;
 
-         updatedExpenses[updateableExpenseIndex] = updatedItem
-
-         return updatedExpenses;
+         return updatedState;
 
       case "DELETE":
-         return state.filter(expense => expense.id !== action.payload)
+         return state.filter((expense) => expense.id !== action.payload);
 
       default:
          return state;
    }
-}
+};
 
 const ExpensesContextProvider = ({ children }) => {
+   const [expensesState, dispatch] = useReducer(expensesReducer, []);
 
-   const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES)
+   // 🔥 LOAD DATA FROM BACKEND
+   useEffect(() => {
+      async function loadExpenses() {
+      const expenses = await fetchExpenses();
+      dispatch({ type: "SET", payload: expenses });
+      }
 
-   const addExpense = (expenseData) => {
+      loadExpenses();
+   }, []);
+
+   async function addExpense(expenseData) {
+      const newExpense = await createExpense(expenseData);
+      dispatch({ type: "ADD", payload: newExpense });
+   }
+
+   async function updateExpense(id, expenseData) {
+      await updateExpenseApi(id, expenseData);
       dispatch({
-         type: "ADD",
-         payload: expenseData
-      })
+      type: "UPDATE",
+      payload: { id: id, data: expenseData },
+      });
    }
 
-   const deleteExpense = (id) => {
-      dispatch({type: "DELETE", payload: id })
+   async function deleteExpense(id) {
+      await deleteExpenseApi(id);
+      dispatch({ type: "DELETE", payload: id });
    }
 
-   const updateExpense = (id, expenseData) => {
-      dispatch({
-         type: "UPDATE",
-         payload: {
-            id: id,
-            data: expenseData
-         }
-      })
-   }
-
-   const values = {
+   const value = {
       expenses: expensesState,
       addExpense,
+      updateExpense,
       deleteExpense,
-      updateExpense
-   }
+   };
 
    return (
-      <ExpensesContext.Provider value={values}>
-         {children}
+      <ExpensesContext.Provider value={value}>
+      {children}
       </ExpensesContext.Provider>
-   )
-}
+   );
+};
 
 export default ExpensesContextProvider;
