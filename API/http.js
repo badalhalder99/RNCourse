@@ -21,7 +21,7 @@ export async function createExpense(expenseData) {
    const response = await fetch(BACKEND_URL, {
       method: "POST",
       headers: {
-      "Content-Type": "application/json",
+         "Content-Type": "application/json",
       },
       body: JSON.stringify(expenseData),
    });
@@ -44,7 +44,7 @@ export async function updateExpenseApi(id, expenseData) {
    const response = await fetch(`${BACKEND_URL}/${id}`, {
       method: "PUT",
       headers: {
-      "Content-Type": "application/json",
+         "Content-Type": "application/json",
       },
       body: JSON.stringify(expenseData),
    });
