@@ -1,7 +1,7 @@
 import { useContext, useLayoutEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import ExpenseForm from '../components/expensesOutput/expenseForm';
-import IconButton from '../components/UI/IconButton';
+import IconButton from '../components/ui/IconButton';
 import Colors from '../css/color/Colors';
 import { ExpensesContext } from '../store/store';
 

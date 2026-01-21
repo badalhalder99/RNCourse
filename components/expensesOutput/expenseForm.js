@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
-import Button from '../UI/Button';
+import Button from '../ui/Button';
 import Colors from '../../css/color/Colors';
 
 function ExpenseForm({ onSubmit, onCancel, submitButtonLabel, defaultValues }) {
