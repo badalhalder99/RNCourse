@@ -5,11 +5,12 @@ import { StatusBar } from 'expo-status-bar';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
+
 import { Colors } from './constants/styles';
 
 const Stack = createNativeStackNavigator();
 
-function AuthStack() {
+const AuthStack = () => {
    return (
       <Stack.Navigator screenOptions={{
          headerStyle: { backgroundColor: Colors.primary500 },
@@ -42,7 +43,7 @@ function Navigation() {
    );
 }
 
-export default function App() {
+const App = () => {
    return (
       <>
          <StatusBar style="light" />
@@ -50,3 +51,5 @@ export default function App() {
       </>
    );
 }
+
+export default App;

@@ -1,6 +1,6 @@
 import AuthContent from '../components/Auth/AuthContent';
 
-function SignupScreen() {
+const SignupScreen = () => {
    return <AuthContent />;
 }
 
