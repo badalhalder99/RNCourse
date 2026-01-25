@@ -12,7 +12,8 @@ import { Colors } from './constants/styles';
 
 const Stack = createNativeStackNavigator();
 
-function AuthStack({ onAuthenticate }) {
+const AuthStack = ({ onAuthenticate }) => {
+
    return (
       <Stack.Navigator screenOptions={{
          headerStyle: { backgroundColor: Colors.primary500 },
@@ -29,7 +30,8 @@ function AuthStack({ onAuthenticate }) {
    );
 }
 
-function AuthenticatedStack({ onLogout }) {
+const AuthenticatedStack = ({ onLogout }) => {
+   
    return (
       <Stack.Navigator screenOptions={{
          headerStyle: { backgroundColor: Colors.primary500 },
