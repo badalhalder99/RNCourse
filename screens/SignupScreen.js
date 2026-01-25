@@ -34,6 +34,7 @@ const SignupScreen = () => {
       }
 
       try {
+
          const response = await fetch(SIGNUP_URL, {
             method: 'POST',
             headers: {
@@ -56,8 +57,8 @@ const SignupScreen = () => {
             'Please login with your email and password',
             [
                {
-               text: 'OK',
-               onPress: () => navigation.replace('Login'),
+                  text: 'OK',
+                  onPress: () => navigation.replace('Login'),
                },
             ]
          );

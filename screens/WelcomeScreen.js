@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const WelcomeScreen = () => {
    return (
-      <View style={styles.rootContainer}>
+      <View style={styles.container}>
          <Text style={styles.title}>Welcome!</Text>
-         <Text>You authenticated successfully!</Text>
+         <Text>You are logged in successfully.</Text>
       </View>
    );
 };
@@ -12,15 +12,15 @@ const WelcomeScreen = () => {
 export default WelcomeScreen;
 
 const styles = StyleSheet.create({
-  rootContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 32,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
+   container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 24
+   },
+   title: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      marginBottom: 16
+   }
 });
