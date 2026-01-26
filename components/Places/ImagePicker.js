@@ -1,13 +1,18 @@
-import { Alert, Button, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker';
+import { Colors } from '../../constants/styles';
 
 const ImagePicker = () => {
-   const [cameraPermissionInformation, requestPermission] = useCameraPermissions()
+   const [pickedImage, setPickedImage] = useState(null);
+
+   const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
    async function verifyPermissions() {
       if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
-         const permissionResponse = await requestPermission()
-         return permissionResponse.granted
+         const permissionResponse = await requestPermission();
+
+         return permissionResponse.granted;
       }
 
       if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
@@ -18,12 +23,11 @@ const ImagePicker = () => {
          return false;
       }
 
-      return true
+      return true;
    }
 
-   const takeImageHandler = async () => {
-
-      const hasPermission = await verifyPermissions()
+   async function takeImageHandler() {
+      const hasPermission = await verifyPermissions();
 
       if (!hasPermission) {
          return;
@@ -31,18 +35,44 @@ const ImagePicker = () => {
 
       const image = await launchCameraAsync({
          allowsEditing: true,
-         aspect: [4, 3],
-         quality: 0.7,
-      })
-      console.log(image)
+         aspect: [16, 9],
+         quality: 0.5
+      });
+
+      setPickedImage(image.assets[0].uri);
+   }
+
+   let imagePreview = <Text>No image taken yet.</Text>;
+
+   if (pickedImage) {
+      imagePreview = <Image style={styles.image} source={{ uri: pickedImage }} />;
    }
 
    return (
       <View>
-         <View></View>
-         <Button title="Take Image" onPress={takeImageHandler} />
+         <View style={styles.imagePreview}>
+            {imagePreview}
+         </View>
+         <Button title='Take Image' onPress={takeImageHandler} />
       </View>
    );
 }
 
 export default ImagePicker;
+
+const styles = StyleSheet.create({
+   imagePreview: {
+      width: '100%',
+      height: 200,
+      marginVertical: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: Colors.primary100,
+      borderRadius: 9
+   },
+   image: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 9
+   }
+});
