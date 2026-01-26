@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import PlaceItem from './PlaceItem';
 
-function PlacesList({ places }) {
+const PlacesList = ({ places }) => {
 
    if (!places || places.length === 0) {
       return (

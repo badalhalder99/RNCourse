@@ -1,6 +1,6 @@
 import PlacesList from '../components/Places/PlacesList';
 
-function AllPlaces() {
+const AllPlaces = () => {
    return <PlacesList />;
 }
 
