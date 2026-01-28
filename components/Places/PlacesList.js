@@ -14,6 +14,7 @@ const PlacesList = ({ places }) => {
 
    return (
       <FlatList
+         style={styles.flatList}
          data={places}
          keyExtractor={(item) => item.id}
          renderItem={({ item }) => <PlaceItem place={item} />}
@@ -32,4 +33,7 @@ const styles = StyleSheet.create({
    fallbackText: {
       fontSize: 16,
    },
+   flatList: {
+      padding: 10
+   }
 });

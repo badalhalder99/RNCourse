@@ -20,7 +20,7 @@ const App = () => {
                },
                headerTintColor: Colors.gray700,
                contentStyle: {
-                  backgroundColor: Colors.primary50
+                  backgroundColor: Colors.primary50,
                }
             }}>
                <Stack.Screen
