@@ -1,24 +1,53 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { Colors } from '../constants/styles';
 import { fetchPlaceDetails } from '../util/http';
+import OutlineButton from '../components/ui/OutlinedButton'
+import { deletePlace } from '../util/http';
+import { useNavigation } from '@react-navigation/native';
 
 const PlaceDetails = ({ route }) => {
    const [place, setPlace] = useState(null);
    const [isLoading, setIsLoading] = useState(true);
+   const navigation = useNavigation();
 
    const placeId = route.params.id;
 
+   async function deleteHandler() {
+      Alert.alert(
+         "Delete Place",
+         "Are you sure you want to delete this place?",
+         [
+            { text: "Cancel" },
+            {
+               text: "Delete",
+               style: "destructive",
+               onPress: async () => {
+                  try {
+                     await deletePlace(placeId);
+
+                     navigation.navigate('AllPlaces', {
+                        deletedPlaceId: placeId,   // 👈 pass deleted id back
+                     });
+                  } catch (error) {
+                     console.log('Error deleting place:', error);
+                  }
+               },
+            },
+         ]
+      );
+   }
+
    useEffect(() => {
       async function loadPlaceDetails() {
-      try {
-         const data = await fetchPlaceDetails(placeId);
-         setPlace(data);
-      } catch (error) {
-         console.log('Error fetching place details:', error);
-      } finally {
-         setIsLoading(false);
-      }
+         try {
+            const data = await fetchPlaceDetails(placeId);
+            setPlace(data);
+         } catch (error) {
+            console.log('Error fetching place details:', error);
+         } finally {
+            setIsLoading(false);
+         }
       }
 
       loadPlaceDetails();
@@ -26,10 +55,10 @@ const PlaceDetails = ({ route }) => {
 
    if (isLoading) {
       return (
-      <View style={styles.centered}>
-         <ActivityIndicator size="large" color={Colors.primary500} />
-         <Text>Loading place details...</Text>
-      </View>
+         <View style={styles.centered}>
+            <ActivityIndicator size="large" color={Colors.primary500} />
+            <Text>Loading place details...</Text>
+         </View>
       );
    }
 
@@ -49,6 +78,7 @@ const PlaceDetails = ({ route }) => {
             <Text style={styles.coord}>Latitude: {place.location.lat}</Text>
             <Text style={styles.coord}>Longitude: {place.location.lng}</Text>
          </View>
+         <OutlineButton icon="trash" onPress={deleteHandler}>Delete place</OutlineButton>
       </View>
    );
 };
