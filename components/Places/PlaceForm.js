@@ -4,75 +4,77 @@ import { Colors } from '../../constants/styles';
 import ImagePicker from './ImagePicker';
 import LocationPicker from './LocationPicker';
 import Button from '../ui/Button';
-import { Place } from '../../models/place';
 
-const PlaceForm = ({onCreatePlace}) => {
-   const [enteredTitle, setEnteredTitle] = useState('');
-   const [pickedImage, setPickedImage] = useState();
-   const [pickedLocation, setPickedLocation] = useState();
+const PlaceForm = ({ onCreatePlace }) => {
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [pickedImage, setPickedImage] = useState();
+  const [pickedLocation, setPickedLocation] = useState();
 
+  function changeTitleHandler(text) {
+    setEnteredTitle(text);
+  }
 
-   function changeTitleHandler(enteredText) {
-      setEnteredTitle(enteredText);
-   }
+  function pickImageHandler(imageUri) {
+    setPickedImage(imageUri);
+  }
 
-   function pickImageHandler(imageUri) {
-      setPickedImage(imageUri);
-   }
+  const pickLocationHandler = useCallback((location) => {
+    setPickedLocation(location);
+  }, []);
 
-   const pickLocationHandler = useCallback((location) => {
-      setPickedLocation(location);
-   })
+  function savePlaceHandler() {
+    if (!enteredTitle || !pickedImage || !pickedLocation) {
+      Alert.alert('Invalid input', 'Please fill all fields.');
+      return;
+    }
 
+    const placeData = {
+      title: enteredTitle,
+      imageUri: pickedImage,
+      location: pickedLocation,
+    };
 
-   function saveplaceHandler() {
-      if (!enteredTitle || !pickedImage || !pickedLocation) {
-         Alert.alert('Invalid input', 'Please fill all fields.');
-         return;
-      }
+    onCreatePlace(placeData);
+  }
 
-      const placeData = new Place(enteredTitle, pickedImage, pickedLocation)
+  return (
+    <ScrollView style={styles.form}>
+      <View>
+        <Text style={styles.label}>Title</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={changeTitleHandler}
+          value={enteredTitle}
+        />
+      </View>
 
-      onCreatePlace(placeData)
-   }
+      <ImagePicker onTakeImage={pickImageHandler} />
+      <LocationPicker onPickLocation={pickLocationHandler} />
 
-
-   return (
-      <ScrollView style={styles.form}>
-         <View>
-            <Text style={styles.label}>Title</Text>
-            <TextInput
-               style={styles.input}
-               onChangeText={changeTitleHandler}
-               value={enteredTitle}
-            />
-         </View>
-         <ImagePicker onTakeImage={pickImageHandler} />
-         <LocationPicker onPickLocation={pickLocationHandler} />
-         <Button onPress={saveplaceHandler}>Add place</Button>
-      </ScrollView>
-   );
-}
+      <Button onPress={savePlaceHandler}>Add place</Button>
+    </ScrollView>
+  );
+};
 
 export default PlaceForm;
 
 const styles = StyleSheet.create({
-   form: {
-      flex: 1,
-      padding: 24,
-   },
-   label: {
-      fontWeight: 'bold',
-      marginBottom: 4,
-      color: Colors.primary500,
-   },
-   input: {
-      marginVertical: 8,
-      paddingHorizontal: 4,
-      paddingVertical: 8,
-      fontSize: 16,
-      borderBottomColor: Colors.primary700,
-      borderBottomWidth: 2,
-      backgroundColor: Colors.primary100,
-   },
+  form: {
+    flex: 1,
+    padding: 24,
+  },
+  label: {
+    fontWeight: 'bold',
+    marginBottom: 4,
+    color: Colors.primary500,
+  },
+  input: {
+    marginVertical: 8,
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+    fontSize: 16,
+    borderBottomColor: Colors.primary700,
+    borderBottomWidth: 2,
+    backgroundColor: Colors.primary100,
+  },
 });

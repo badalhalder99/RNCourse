@@ -19,8 +19,12 @@ function PlaceItem({ place }) {
       <Image style={styles.image} source={{ uri: place.imageUri }} />
       <View style={styles.info}>
         <Text style={styles.title}>{place.title}</Text>
-        <Text style={styles.address}>Lat: {place.location.lat}</Text>
-        <Text style={styles.address}>Lng: {place.location.lng}</Text>
+        <Text style={styles.address}>
+          Lat: {place.location?.lat ?? 'N/A'}
+        </Text>
+        <Text style={styles.address}>
+          Lng: {place.location?.lng ?? 'N/A'}
+        </Text>
       </View>
     </Pressable>
   );
